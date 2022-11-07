@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<mule xmlns:ee="http://www.mulesoft.org/schema/mule/ee/core" xmlns:http="http://www.mulesoft.org/schema/mule/http"
+	xmlns="http://www.mulesoft.org/schema/mule/core"
+	xmlns:doc="http://www.mulesoft.org/schema/mule/documentation" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://www.mulesoft.org/schema/mule/core http://www.mulesoft.org/schema/mule/core/current/mule.xsd
+http://www.mulesoft.org/schema/mule/http http://www.mulesoft.org/schema/mule/http/current/mule-http.xsd
+http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/ee/core/current/mule-ee.xsd">
+	<http:listener-config name="HTTP_Listener_config" doc:name="HTTP Listener config" doc:id="1ba0ef63-5e44-4252-9c3e-75a91939ce43" >
+		<http:listener-connection host="0.0.0.0" port="8081" />
+	</http:listener-config>
+	<flow name="calciapiFlow1" doc:id="66872280-d08c-4891-ac41-4d892cd78261" >
+		<http:listener doc:name="Listener" doc:id="574aa5d7-ac29-4401-8798-a18997039b7e" config-ref="HTTP_Listener_config" path="/calci"/>
+		<logger level="INFO" doc:name="Logger" doc:id="6794910b-5bd3-4827-b51f-c730d5b2dab5" message='#["Created Input"]'/>
+		<ee:transform doc:name="Transform Message" doc:id="be2b82f4-a955-47f2-a4b3-3f5d2370313a" >
+			<ee:message >
+				<ee:set-payload ><![CDATA[%dw 2.0
+output application/json
+---
+{
+"Sub" : attributes.queryParams.fname - attributes.queryParams.lname
+}]]></ee:set-payload>
+			</ee:message>
+		</ee:transform>
+		<logger level="INFO" doc:name="Logger" doc:id="99a55686-890c-4f69-9723-b27ee8c9f406" message="#[payload]"/>
+	</flow>
+</mule>
