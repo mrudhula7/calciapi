@@ -10,7 +10,6 @@ http://www.mulesoft.org/schema/mule/ee/core http://www.mulesoft.org/schema/mule/
 	</http:listener-config>
 	<flow name="calciapiFlow1" doc:id="66872280-d08c-4891-ac41-4d892cd78261" >
 		<http:listener doc:name="Listener" doc:id="574aa5d7-ac29-4401-8798-a18997039b7e" config-ref="HTTP_Listener_config" path="/calci"/>
-		<logger level="INFO" doc:name="Logger" doc:id="6794910b-5bd3-4827-b51f-c730d5b2dab5" message='#["Created Input"]'/>
 		<ee:transform doc:name="Transform Message" doc:id="be2b82f4-a955-47f2-a4b3-3f5d2370313a" >
 			<ee:message >
 				<ee:set-payload ><![CDATA[%dw 2.0
